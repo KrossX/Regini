@@ -35,12 +35,31 @@ namespace regini
 		section_type* get_section(string section_name);
 		entry_type*   get_entry(string section_name, string key_name);
 
+		void write_string(string section, string key, string value);
+
 	public:
 		int    get_integer(string section, string key, int default_value = 0);
 		string get_string(string section, string key, string default_value = "");
 
-		void write_int(string section, string key, int value);
-		void write_string(string section, string key, string value);
+		template<class T>
+		void write(string section, string key, T value)
+		{
+			string string_value = std::to_string(value);
+			write_string(section, key, string_value);
+		}
+
+		template<>
+		void write<const char*>(string section, string key, const char* value)
+		{
+			string string_value(value);
+			write_string(section, key, string_value);
+		}
+
+		template<>
+		void write<string>(string section, string key, string value)
+		{
+			write_string(section, key, value);
+		}
 
 		bool open(string filename);
 		void save();

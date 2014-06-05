@@ -11,6 +11,17 @@
 
 namespace regini
 {
+	template void regini_file::write<int>(string section, string key, int value);
+	template void regini_file::write<long>(string section, string key, long value);
+	template void regini_file::write<long long>(string section, string key, long long value);
+	template void regini_file::write<unsigned>(string section, string key, unsigned value);
+	template void regini_file::write<unsigned long>(string section, string key, unsigned long value);
+	template void regini_file::write<unsigned long long>(string section, string key, unsigned long long value);
+	template void regini_file::write<float>(string section, string key, float value);
+	template void regini_file::write<double>(string section, string key, double value);
+	template void regini_file::write<long double>(string section, string key, long double value);
+	
+
 	const string winreg = "Windows Registry Editor Version 5.00";
 
 	static inline string string_tolower(string in)
@@ -189,36 +200,6 @@ namespace regini
 		return default_value;
 	}
 
-	void regini_file::write_int(string section, string key, int value)
-	{
-		section_type *sec = get_section(section);
-
-		entry_type newentry;
-		newentry.key = key;
-		newentry.value = std::to_string(value);
-
-		if (sec == nullptr)
-		{
-			section_type newsection;
-			newsection.name = section;
-			newsection.entry.push_back(newentry);
-			this->section.push_back(newsection);
-		}
-		else
-		{
-			entry_type *entry = get_entry(section, key);
-
-			if (entry == nullptr)
-			{
-				sec->entry.push_back(newentry);
-			}
-			else
-			{
-				entry->value = newentry.value;
-			}
-		}
-	}
-
 	void regini_file::write_string(string section, string key, string value)
 	{
 		section_type *sec = get_section(section);
@@ -248,6 +229,7 @@ namespace regini
 			}
 		}
 	}
+
 
 } // end regini namespace
 

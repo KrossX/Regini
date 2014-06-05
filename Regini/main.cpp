@@ -12,6 +12,13 @@ int main()
 	regini::regini_file inifile;
 	
 	// To test the thing
+	inifile.open("test.ini");
+
+	inifile.write("Section", "integer", -50);
+	inifile.write("section", "string", "test");
+	inifile.write("secTion", "double", 0.55);
+
+	inifile.save();
 
 
 	return 0;
