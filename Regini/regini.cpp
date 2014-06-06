@@ -176,28 +176,19 @@ namespace regini
 		return nullptr;
 	}
 
-	int regini_file::get_integer(string section, string key, int default_value)
+	bool regini_file::read_string(string section, string key, string &out)
 	{
 		entry_type *entry = get_entry(section, key);
 
 		if (entry != nullptr)
 		{
-			default_value = std::stoi(entry->value, nullptr, 10);
+			out = entry->value;
+			return true;
 		}
-
-		return default_value;
-	}
-
-	string regini_file::get_string(string section, string key, string default_value)
-	{
-		entry_type *entry = get_entry(section, key);
-
-		if (entry != nullptr)
+		else
 		{
-			default_value = entry->value;
+			return false;
 		}
-
-		return default_value;
 	}
 
 	void regini_file::write_string(string section, string key, string value)
